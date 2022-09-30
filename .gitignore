@@ -1,4 +1,6 @@
 .DS_Store
 .idea
 collect_data.py
+*.pyc
+query.py
 
