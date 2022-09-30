@@ -8,6 +8,6 @@ There are some restrictions on Twitter API, so we cannot retrieve any data from 
 ## Technical
 
 As I have used the Curl to retrieve data from Twitter API, here is the URL we use:
-https://api.twitter.com/2/tweets/counts/all?query=(#MahsaAmini+OR+#مهسا_امینی)+-is:retweet+-is:retweet&start_time=2022-09-14T00:00:00Z&end_time=2022-09-30T04:23:06Z&
+```https://api.twitter.com/2/tweets/counts/all?query=(#MahsaAmini+OR+#مهسا_امینی)+-is:retweet+-is:retweet&start_time=2022-09-14T00:00:00Z&end_time=2022-09-30T04:23:06Z&```
 
 Please note that we should send the Authorization Key in header of our HTTP request. The key is provided to you when you register an account on [Twitter Developer](https://developer.twitter.com).
