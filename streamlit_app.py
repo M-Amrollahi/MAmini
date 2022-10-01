@@ -1,4 +1,3 @@
-from matplotlib import markers
 import streamlit as st
 import pandas as pd
 import json
