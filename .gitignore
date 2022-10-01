@@ -3,4 +3,7 @@
 collect_data.py
 *.pyc
 query.py
+__pycache__
+launch.json
+
 
