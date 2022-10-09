@@ -163,9 +163,18 @@ def f_main():
 
     obj_query = cls_query()
 
-    for q in obj_query:
-        f_getTwitterData(q, path_dir )
-
+    ## This is to prevent users to update it at same time
+    path_lockFile = "./.lock"
+    if os.path.exists(path_lockFile):
+        print("Updating... Try it later")
+        return
+    os.mkdir(path_lockFile)
+    try:
+        for q in obj_query:
+            f_getTwitterData(q, path_dir )
+    except:
+        os.rmdir("path_lockFile")
+    os.rmdir(path_lockFile)
 
     dict_df = dict()
     for item in obj_query:
