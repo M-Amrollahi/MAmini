@@ -1,7 +1,6 @@
 .DS_Store
 .idea
 *.pyc
-query.py
 __pycache__
 launch.json
 secrets.toml
