@@ -83,7 +83,7 @@ def f_getTwitterData( tup_query, path_saveFiles):
         try:
             
             str_filename = path_saveFiles + "ma_counts_" + tup_query[0][0] + tup_query[1][0] + '_{:02d}'.format(req_count)+ ".json"
-            with open(str_filename,"w+") as fileJSON:
+            with open(str_filename,"w") as fileJSON:
                 json.dump(dict_respJSON, fileJSON)
             print(str_filename + " saved")
                 
@@ -135,7 +135,7 @@ def f_getCountsPer1Hour(df10):
 
 def f_getConfigs():
     try:
-        with open(PATH_CONFIG,"r+") as fconf:
+        with open(PATH_CONFIG,"r") as fconf:
             configs = json.load(fconf)
     except:
         print("---Error reading the config file", exc_info=True)
@@ -154,10 +154,9 @@ def f_main():
     if (dt_lastup - datetime.strptime(config["last_update"], str_ftime)).total_seconds() < 30 * 60:
         return
 
-    config["last_update"] = dt_lastup.strftime(str_ftime)
-    
     str_endDatetime = dt_lastup.strftime(str_ftime)
-
+    config["last_update"] = str_endDatetime
+    
 
     path_dir = PATH_DATA_FOLDER + "tw_raw"+"/"
 

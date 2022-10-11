@@ -8,8 +8,9 @@ import plotly.express as px
 st.markdown("<h1 style='text-align: center;'>Twitter Dashboard for Trends</h1>", unsafe_allow_html=True)
 ## load the last-update file
 try:
-    with open("./data/data_counts/dataj.json","r+") as fconf:
+    with open("./data/data_counts/dataj.json","r") as fconf:
         dataj = json.load(fconf)
+        print("reading dataj file: ",dataj)
         
 except:
     st.markdown("__No data__")
