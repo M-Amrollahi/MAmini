@@ -3,9 +3,18 @@ import pandas as pd
 import json
 from datetime import datetime
 import plotly.express as px
+import os
 
 
 st.markdown("<h1 style='text-align: center;'>Twitter Dashboard for Trends</h1>", unsafe_allow_html=True)
+
+## This is to prevent users to update it at same time
+path_lockFile = "./.lock"
+if os.path.exists(path_lockFile):
+    print("Updating... Try it later")
+    st.stop()
+
+
 ## load the last-update file
 try:
     with open("./data/data_counts/dataj.json","r") as fconf:

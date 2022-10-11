@@ -10,6 +10,11 @@ from collect_data import f_main
 
 
 st.markdown("<h1 style='text-align: center;'>Twitter Dashboard for<br><a href='https://twitter.com/search?q=%23MahsaAmini'>#MahsaAmini</a>  <a href='https://twitter.com/search?q=%23%D9%85%D9%87%D8%B3%D8%A7_%D8%A7%D9%85%DB%8C%D9%86%DB%8C'>#مهسا_امینی</a></h1>", unsafe_allow_html=True)
+
+
+with st.spinner('Fetching data...'):
+    f_main()
+
 ## load the last-update file
 try:
     with open("./data/data_counts/dataj.json","r+") as fconf:
@@ -18,10 +23,6 @@ try:
 except:
     st.markdown("__No data__")
     st.stop()
-
-with st.spinner('Fetching data...'):
-    f_main()
-
 
 ## load dataframes for both series
 df1 = pd.read_csv("./data/data_counts/df_counts_by_day_with_retweet.csv")
