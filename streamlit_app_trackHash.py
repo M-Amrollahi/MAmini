@@ -3,7 +3,6 @@ import pandas as pd
 import json
 from datetime import datetime
 import plotly.express as px
-import templates
 
 
 st.markdown("<h1 style='text-align: center;'>Twitter Dashboard for Trends</h1>", unsafe_allow_html=True)
@@ -14,7 +13,7 @@ try:
         
 except:
     st.markdown("__No data__")
-    quit()
+    st.stop()
 
 
 df1 = pd.read_csv("./data/data_counts/df_counts_last24h_sharif_uni_with_rt_.csv")

@@ -17,7 +17,7 @@ try:
         
 except:
     st.markdown("__No data__")
-    quit()
+    st.stop()
 
 with st.spinner('Fetching data...'):
     f_main()
