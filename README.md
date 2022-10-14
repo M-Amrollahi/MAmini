@@ -6,7 +6,7 @@ There are many packages(in pip) to collect the data from Twitter, but I have use
 There are some restrictions on Twitter API, so we cannot retrieve any data from it. It depends on the license that we have from Twitter. For example, if we want to search on tweets based on any phrase or hashtag, we have a limitation of 300 requests per 15 minutes, and in each request, we will get a maximum of 100 results(tweets). Overall, we have a limitation on the total number of tweets per month.
 
 ## Demo
-The charts and illustrations have been implemented using [Streamlit](https://streamlit.io/) and they are available on [here](https://m-amrollahi-mamini-streamlit-app-b51hmx.streamlitapp.com/).
+The charts and illustrations have been implemented using [Streamlit](https://streamlit.io/) and they are available on [here](https://mahsaamini.streamlitapp.com/).
 
 ## Technical
 
