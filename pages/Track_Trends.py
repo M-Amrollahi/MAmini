@@ -1,29 +1,15 @@
 import streamlit as st
 import pandas as pd
-import json
 from datetime import datetime
 import plotly.express as px
-import os
+from collect_data import f_prepTrackHash
 
 
 st.markdown("<h1 style='text-align: center;'>Twitter Dashboard for Trends</h1>", unsafe_allow_html=True)
 
-## This is to prevent users to update it at same time
-path_lockFile = "./.lock"
-if os.path.exists(path_lockFile):
-    print("Updating... Try it later")
-    st.stop()
+with st.spinner('Updating...'):
+    f_prepTrackHash()
 
-
-## load the last-update file
-try:
-    with open("./data/data_counts/dataj.json","r") as fconf:
-        dataj = json.load(fconf)
-        print("reading dataj file: ",dataj)
-        
-except:
-    st.markdown("__No data__")
-    st.stop()
 
 
 df1 = pd.read_csv("./data/data_counts/df_counts_last24h_sharif_uni_with_rt_.csv")
@@ -36,9 +22,9 @@ center_format = "<h4 style='text-align: center;'>{}</h4>"
 
 
 ## Last update
-dt_lastup = datetime.strptime(dataj["last_update"],"%Y-%m-%d %H:%M")
-str_lastupdate = dt_lastup.strftime("%Y-%m-%d %H:%M")
-st.markdown("__Last update: {} UTC__".format(str_lastupdate))
+#dt_lastup = datetime.strptime(dataj["last_update"],"%Y-%m-%d %H:%M")
+#str_lastupdate = dt_lastup.strftime("%Y-%m-%d %H:%M")
+#st.markdown("__Last update: {} UTC__".format(str_lastupdate))
 
 
 

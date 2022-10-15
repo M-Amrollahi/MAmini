@@ -3,17 +3,16 @@ import pandas as pd
 import json
 from datetime import datetime
 import plotly.express as px
-from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import templates
-from collect_data import f_main
+from collect_data import f_prepAmini
 
 
 st.markdown("<h1 style='text-align: center;'>Twitter Dashboard for<br><a href='https://twitter.com/search?q=%23MahsaAmini'>#MahsaAmini</a>  <a href='https://twitter.com/search?q=%23%D9%85%D9%87%D8%B3%D8%A7_%D8%A7%D9%85%DB%8C%D9%86%DB%8C'>#مهسا_امینی</a></h1>", unsafe_allow_html=True)
 
 
 with st.spinner('Updating...'):
-    f_main()
+    f_prepAmini()
 
 ## load the last-update file
 try:

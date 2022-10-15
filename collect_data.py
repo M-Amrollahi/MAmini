@@ -5,11 +5,11 @@ import json
 import os
 import pandas as pd
 import numpy as np
-from query import cls_query
+from query import cls_qMAmini, cls_qTrackHash, cls_query
 import streamlit as st
 
 PATH_DATA_FOLDER = "./data/"
-PATH_CONFIG = "./config_counts.json"
+
 
 def f_getDataFrameFromRawJSON(str_path="./", fileTemplate=""):
     """ This function creates a dataframe out of json files provided by twitter """
@@ -37,7 +37,7 @@ def f_getDataFrameFromRawJSON(str_path="./", fileTemplate=""):
 
 def f_getTwitterData( tup_query, path_saveFiles):
 
-    configs = f_getConfigs()
+    configs = f_getConfigs("./config_counts.json")
 
     
     req_count = 0
@@ -82,7 +82,7 @@ def f_getTwitterData( tup_query, path_saveFiles):
         #Save the json response to a separate file (using json.dump)
         try:
             
-            str_filename = path_saveFiles + "ma_counts_" + tup_query[0][0] + tup_query[1][0] + '_{:02d}'.format(req_count)+ ".json"
+            str_filename = path_saveFiles + "ma_" + "counts_" + tup_query[0][0] + tup_query[1][0] + '_{:02d}'.format(req_count)+ ".json"
             with open(str_filename,"w") as fileJSON:
                 json.dump(dict_respJSON, fileJSON)
             print(str_filename + " saved")
@@ -103,9 +103,6 @@ def f_getTwitterData( tup_query, path_saveFiles):
 
 def f_exportData(dict_data, str_path):
 
-    
-    print("Last Update: " + dict_data["last_update"])
-    #update lasttime updated for wnd_time twitter
     try:
         with open(str_path, "w") as fconf:
 
@@ -133,9 +130,9 @@ def f_getCountsPer1Hour(df10):
     return df11
 
 
-def f_getConfigs():
+def f_getConfigs(path_config):
     try:
-        with open(PATH_CONFIG,"r") as fconf:
+        with open(path_config,"r") as fconf:
             configs = json.load(fconf)
     except:
         print("---Error reading the config file", exc_info=True)
@@ -143,27 +140,27 @@ def f_getConfigs():
 
     return configs
 
-def f_main():
 
-    
-    config = f_getConfigs()
+def f_prepAmini():
+
+    config = f_getConfigs("./config_amini.json")
 
     str_ftime = "%Y-%m-%d %H:%M:%S%Z:%z"
     dt_lastup = datetime.now(timezone.utc) - timedelta(seconds=15)
     
-    if (dt_lastup - datetime.strptime(config["last_update"], str_ftime)).total_seconds() < 30 * 60:
+    if (dt_lastup - datetime.strptime(config["last_update_mamini"], str_ftime)).total_seconds() < 2 * 60:
         return
 
     str_endDatetime = dt_lastup.strftime(str_ftime)
-    config["last_update"] = str_endDatetime
+    config["last_update_mamini"] = str_endDatetime
     
 
     path_dir = PATH_DATA_FOLDER + "tw_raw"+"/"
 
-    obj_query = cls_query()
+    obj_query = cls_qMAmini()
 
     ## This is to prevent users to update it at same time
-    path_lockFile = "./.lock"
+    path_lockFile = "./.lock1"
     if os.path.exists(path_lockFile):
         print("Updating... Try it later")
         return
@@ -183,32 +180,32 @@ def f_main():
 
     dict_data = dict()
 
-    key_df = obj_query.f_getKey(cls_query.v_maminiAll,True)
+    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiAll,True)
     df1 = dict_df[key_df[0]+key_df[1]]
     dict_data["last_update"] = df1.loc[len(df1)-1,"start"].strftime("%Y-%m-%d %H:%M")
 
 
-    key_df = obj_query.f_getKey(cls_query.v_maminiFA, True)
+    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiFA, True)
     df1 = dict_df[key_df[0]+key_df[1]];
     dict_data["sum_maminiFA_isRT"] = str(df1["tweet_count"].sum())
 
-    key_df = obj_query.f_getKey(cls_query.v_maminiFA, False)
+    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiFA, False)
     df1 = dict_df[key_df[0]+key_df[1]]
     dict_data["sum_maminiFA_noRT"] = str(df1["tweet_count"].sum())
 
-    key_df = obj_query.f_getKey(cls_query.v_maminiEN, True)
+    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiEN, True)
     df1 = dict_df[key_df[0]+key_df[1]]
     dict_data["sum_maminiEN_isRT"] = str(df1["tweet_count"].sum())
 
-    key_df = obj_query.f_getKey(cls_query.v_maminiEN, False)
+    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiEN, False)
     df1 = dict_df[key_df[0]+key_df[1]]
     dict_data["sum_maminiEN_noRT"] = str(df1["tweet_count"].sum())
 
-    key_df = obj_query.f_getKey(cls_query.v_maminiAll, True)
+    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiAll, True)
     df1 = dict_df[key_df[0]+key_df[1]]
     dict_data["sum_maminiALL_isRT"] = str(df1["tweet_count"].sum())
 
-    key_df = obj_query.f_getKey(cls_query.v_maminiAll, False)
+    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiAll, False)
     df1 = dict_df[key_df[0]+key_df[1]]
     dict_data["sum_maminiALL_noRT"] = str(df1["tweet_count"].sum())
 
@@ -216,7 +213,7 @@ def f_main():
     f_exportData(dict_data, "./data/data_counts/dataj.json")
 
 
-    key_df = obj_query.f_getKey(cls_query.v_maminiAll,True)
+    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiAll,True)
     df1 = f_getCountsPer1Day(dict_df[key_df[0]+key_df[1]])
     df1["cums"] = df1["tweet_count"].cumsum()
     df1.to_csv("./data/data_counts/df_counts_by_day_with_retweet.csv")
@@ -226,30 +223,80 @@ def f_main():
     df1 = f_getCountsPer1Hour(df1)
     df1.to_csv("./data/data_counts/df_counts_last24h_with_retweet.csv")
     
-    key_df = obj_query.f_getKey(cls_query.v_maminiAll,False)
+    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiAll,False)
     df2 = f_getCountsPer1Day(dict_df[key_df[0]+key_df[1]])
     df2["cums"] = df2["tweet_count"].cumsum()
     df2.to_csv("./data/data_counts/df_counts_by_day_no_retweet.csv")
 
 
-    key_df = obj_query.f_getKey(cls_query.v_sharifUni,True)
+    
+    
+    f_exportData(config , "./config_amini.json")
+
+
+    for j in obj_query:
+        key = j[0][0]+j[1][0]
+        for i in os.listdir(path_dir):
+            if i.endswith(".json") and key in i:
+                os.remove(path_dir+ i)
+
+
+def f_prepTrackHash():
+
+    config = f_getConfigs("./config_track.json")
+
+    str_ftime = "%Y-%m-%d %H:%M:%S%Z:%z"
+    dt_lastup = datetime.now(timezone.utc) - timedelta(seconds=15)
+    
+    if (dt_lastup - datetime.strptime(config["last_update_track_hash"], str_ftime)).total_seconds() < 2 * 60:
+        return
+
+    str_endDatetime = dt_lastup.strftime(str_ftime)
+    config["last_update_track_hash"] = str_endDatetime
+    
+
+    path_dir = PATH_DATA_FOLDER + "tw_raw"+"/"
+
+    obj_query = cls_qTrackHash()
+
+    ## This is to prevent users to update it at same time
+    path_lockFile = "./.lock2"
+    if os.path.exists(path_lockFile):
+        print("Updating... Try it later")
+        return
+    os.mkdir(path_lockFile)
+    try:
+        for q in obj_query:
+            f_getTwitterData(q, path_dir )
+    except:
+        os.rmdir("path_lockFile")
+    os.rmdir(path_lockFile)
+
+    dict_df = dict()
+    for item in obj_query:
+        fileKey = item[0][0]+item[1][0]
+        dict_df[fileKey] = f_getDataFrameFromRawJSON(path_dir, fileKey)
+    
+
+    dict_data = dict()
+
+    key_df = obj_query.f_getKey(cls_qTrackHash.v_sharifUni,True)
     df1 = dict_df[key_df[0]+key_df[1]]
     df1["cums"] = df1["tweet_count"].cumsum()
     df1 = f_getCountsPer1Hour(df1)
     df1.to_csv("./data/data_counts/df_counts_last24h_{}.csv".format(key_df[0]+key_df[1]))
     
 
-    key_df = obj_query.f_getKey(cls_query.v_etesabat,True)
+    key_df = obj_query.f_getKey(cls_qTrackHash.v_etesabat,True)
     df1 = dict_df[key_df[0]+key_df[1]]
     df1["cums"] = df1["tweet_count"].cumsum()
     df1 = f_getCountsPer1Hour(df1)
     df1.to_csv("./data/data_counts/df_counts_last24h_{}.csv".format(key_df[0]+key_df[1]))
 
-    
-    f_exportData(config , "./config_counts.json")
+    f_exportData(config , "./config_track.json")
 
-
-    for i in os.listdir(path_dir):
-        if i.endswith(".json"):
-            os.remove(path_dir+ i)
-    
+    for j in obj_query:
+        key = j[0][0]+j[1][0]
+        for i in os.listdir(path_dir):
+            if i.endswith(".json") and key in i:
+                os.remove(path_dir+ i)

@@ -1,1 +1,1 @@
-{"max_result": 100, "max_query_size": 1024, "sleep_requests": 1, "twitter_base_url": "https://api.twitter.com/2/tweets/counts/all", "last_update": "2022-10-14 12:23:51UTC:+0000", "start_time": "2022-09-14T00:00:00Z"}
+{"max_result": 100, "max_query_size": 1024, "sleep_requests": 1, "twitter_base_url": "https://api.twitter.com/2/tweets/counts/all", "start_time": "2022-09-14T00:00:00Z"}
