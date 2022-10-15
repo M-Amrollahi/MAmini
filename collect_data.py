@@ -148,7 +148,7 @@ def f_prepAmini():
     str_ftime = "%Y-%m-%d %H:%M:%S%Z:%z"
     dt_lastup = datetime.now(timezone.utc) - timedelta(seconds=15)
     
-    if (dt_lastup - datetime.strptime(config["last_update_mamini"], str_ftime)).total_seconds() < 2 * 60:
+    if (dt_lastup - datetime.strptime(config["last_update_mamini"], str_ftime)).total_seconds() < 30 * 60:
         return
 
     str_endDatetime = dt_lastup.strftime(str_ftime)
@@ -248,7 +248,7 @@ def f_prepTrackHash():
     str_ftime = "%Y-%m-%d %H:%M:%S%Z:%z"
     dt_lastup = datetime.now(timezone.utc) - timedelta(seconds=15)
     
-    if (dt_lastup - datetime.strptime(config["last_update_track_hash"], str_ftime)).total_seconds() < 2 * 60:
+    if (dt_lastup - datetime.strptime(config["last_update_track_hash"], str_ftime)).total_seconds() < 30 * 60:
         return
 
     str_endDatetime = dt_lastup.strftime(str_ftime)
