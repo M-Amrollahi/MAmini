@@ -1,11 +1,10 @@
 import requests
-import time
 from datetime import datetime, timedelta,timezone
 import json
 import os
 import pandas as pd
 import numpy as np
-from query import cls_qMAmini, cls_qTrackHash, cls_query
+from query import cls_qMAmini, cls_qTrackHash
 import streamlit as st
 
 PATH_DATA_FOLDER = "./data/"
@@ -163,13 +162,17 @@ def f_prepAmini():
     path_lockFile = "./.lock1"
     if os.path.exists(path_lockFile):
         print("Updating... Try it later")
-        return
+
+        if  datetime.now().timestamp() - os.path.getmtime(path_lockFile) > 80:
+            os.rmdir(path_lockFile)
+        else:        
+            return
     os.mkdir(path_lockFile)
     try:
         for q in obj_query:
             f_getTwitterData(q, path_dir )
     except:
-        os.rmdir("path_lockFile")
+        os.rmdir(path_lockFile)
     os.rmdir(path_lockFile)
 
     dict_df = dict()
@@ -263,13 +266,17 @@ def f_prepTrackHash():
     path_lockFile = "./.lock2"
     if os.path.exists(path_lockFile):
         print("Updating... Try it later")
-        return
+
+        if  datetime.now().timestamp() - os.path.getmtime(path_lockFile) > 80:
+            os.rmdir(path_lockFile)
+        else:        
+            return
     os.mkdir(path_lockFile)
     try:
         for q in obj_query:
             f_getTwitterData(q, path_dir )
     except:
-        os.rmdir("path_lockFile")
+        os.rmdir(path_lockFile)
     os.rmdir(path_lockFile)
 
     dict_df = dict()
