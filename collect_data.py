@@ -243,6 +243,8 @@ def f_prepAmini():
             if i.endswith(".json") and key in i:
                 os.remove(path_dir+ i)
 
+    return 1
+
 
 def f_prepTrackHash():
 
@@ -277,6 +279,7 @@ def f_prepTrackHash():
             f_getTwitterData(q, path_dir )
     except:
         os.rmdir(path_lockFile)
+        return
     os.rmdir(path_lockFile)
 
     dict_df = dict()
@@ -307,3 +310,5 @@ def f_prepTrackHash():
         for i in os.listdir(path_dir):
             if i.endswith(".json") and key in i:
                 os.remove(path_dir+ i)
+
+    return 1

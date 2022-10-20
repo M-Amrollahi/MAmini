@@ -12,7 +12,10 @@ st.markdown("<h1 style='text-align: center;'>Twitter Dashboard for<br><a href='h
 
 
 with st.spinner('Updating...'):
-    f_prepAmini()
+    res = f_prepAmini()
+    if res == None:
+        st.write("Error during updating")
+        st.stop()
 
 ## load the last-update file
 try:
