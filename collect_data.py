@@ -148,7 +148,7 @@ def f_prepAmini():
     dt_lastup = datetime.now(timezone.utc) - timedelta(seconds=15)
     
     if (dt_lastup - datetime.strptime(config["last_update_mamini"], str_ftime)).total_seconds() < 30 * 60:
-        return
+        return 2
 
     str_endDatetime = dt_lastup.strftime(str_ftime)
     config["last_update_mamini"] = str_endDatetime
@@ -166,13 +166,14 @@ def f_prepAmini():
         if  datetime.now().timestamp() - os.path.getmtime(path_lockFile) > 80:
             os.rmdir(path_lockFile)
         else:        
-            return
+            return 3
     os.mkdir(path_lockFile)
     try:
         for q in obj_query:
             f_getTwitterData(q, path_dir )
     except:
         os.rmdir(path_lockFile)
+        return
     os.rmdir(path_lockFile)
 
     dict_df = dict()
@@ -254,7 +255,7 @@ def f_prepTrackHash():
     dt_lastup = datetime.now(timezone.utc) - timedelta(seconds=15)
     
     if (dt_lastup - datetime.strptime(config["last_update_track_hash"], str_ftime)).total_seconds() < 30 * 60:
-        return
+        return 2
 
     str_endDatetime = dt_lastup.strftime(str_ftime)
     config["last_update_track_hash"] = str_endDatetime
@@ -272,7 +273,7 @@ def f_prepTrackHash():
         if  datetime.now().timestamp() - os.path.getmtime(path_lockFile) > 80:
             os.rmdir(path_lockFile)
         else:        
-            return
+            return 3
     os.mkdir(path_lockFile)
     try:
         for q in obj_query:
