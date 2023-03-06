@@ -2,7 +2,8 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import plotly.express as px
-from collect_data import f_prepTrackHash
+#from collect_data import f_prepTrackHash
+from query import cls_qTrackHash
 
 
 st.markdown("<h1 style='text-align: center;'>Twitter Dashboard for Trends</h1>", unsafe_allow_html=True)
@@ -13,31 +14,22 @@ st.markdown("<h1 style='text-align: center;'>Twitter Dashboard for Trends</h1>",
 #        st.write("Error during updating")
 #        st.stop()
 
-
-
-df1 = pd.read_csv("./data/data_counts/df_counts_last24h_sharif_uni_with_rt_.csv")
-df2 = pd.read_csv("./data/data_counts/df_counts_last24h_etesabat_sarasari_with_rt_.csv")
-
-df1 = df1.drop(columns=["Unnamed: 0"])
-df2 = df2.drop(columns=["Unnamed: 0"])
-
 center_format = "<h4 style='text-align: center;'>{}</h4>"
 
+obj_query = cls_qTrackHash()
 
-## Last update
-#dt_lastup = datetime.strptime(dataj["last_update"],"%Y-%m-%d %H:%M")
-#str_lastupdate = dt_lastup.strftime("%Y-%m-%d %H:%M")
-#st.markdown("__Last update: {} UTC__".format(str_lastupdate))
+for q in obj_query:
+    
+    filename = "./data/data_counts/df_counts_trends_{}.csv".format(q[0][0]+q[1][0])
+    
+    try:
+        df1 = pd.read_csv(filename)
+        df1 = df1.drop(columns=["Unnamed: 0"])
+
+        st.markdown(center_format.format(f"Number of tweets for {q[0][1]}"),unsafe_allow_html=True)
+        fig = px.bar(df1,x="date",y="tweet_count",labels={"date":"Date","tweet_count":"Count"})
+        st.plotly_chart(fig)
+    except:
+        pass
 
 
-
-## Chart Last 24 hours
-st.markdown(center_format.format("Number of tweets in last 24-hours (UTC) for #دانشگاه_شریف"),unsafe_allow_html=True)
-fig = px.line(df1,x="date",y="cums",labels={"date":"Date(Last 24 hours)","cums":"Cumulative"})
-st.plotly_chart(fig)
-
-
-## Chart Last 24 hours
-st.markdown(center_format.format("Number of tweets in last 24-hours (UTC) for #اعتصابات_سراسری"),unsafe_allow_html=True)
-fig = px.line(df2,x="date",y="cums",labels={"date":"Date(Last 24 hours)","cums":"Cumulative"})
-st.plotly_chart(fig)
