@@ -11,11 +11,11 @@ from collect_data import f_prepAmini
 st.markdown("<h1 style='text-align: center;'>Twitter Dashboard for<br><a href='https://twitter.com/search?q=%23MahsaAmini'>#MahsaAmini</a>  <a href='https://twitter.com/search?q=%23%D9%85%D9%87%D8%B3%D8%A7_%D8%A7%D9%85%DB%8C%D9%86%DB%8C'>#مهسا_امینی</a></h1>", unsafe_allow_html=True)
 
 
-with st.spinner('Updating...'):
-    res = f_prepAmini()
-    if res == None:
-        st.write("Error during updating")
-        st.stop()
+#with st.spinner('Updating...'):
+#    res = f_prepAmini()
+#    if res == None:
+#        st.write("Error during updating")
+#        st.stop()
 
 ## load the last-update file
 try:

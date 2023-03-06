@@ -7,11 +7,11 @@ from collect_data import f_prepTrackHash
 
 st.markdown("<h1 style='text-align: center;'>Twitter Dashboard for Trends</h1>", unsafe_allow_html=True)
 
-with st.spinner('Updating...'):
-    res = f_prepTrackHash()
-    if res == None:
-        st.write("Error during updating")
-        st.stop()
+#with st.spinner('Updating...'):
+#    res = f_prepTrackHash()
+#    if res == None:
+#        st.write("Error during updating")
+#        st.stop()
 
 
 
