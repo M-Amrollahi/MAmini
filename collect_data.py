@@ -184,32 +184,32 @@ def f_prepAmini():
 
     dict_data = dict()
 
-    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiAll,True)
+    key_df = obj_query.f_getKey(obj_query.v_maminiAll,True)
     df1 = dict_df[key_df[0]+key_df[1]]
     dict_data["last_update"] = df1.loc[len(df1)-1,"start"].strftime("%Y-%m-%d %H:%M")
 
 
-    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiFA, True)
+    key_df = obj_query.f_getKey(obj_query.v_maminiFA, True)
     df1 = dict_df[key_df[0]+key_df[1]];
     dict_data["sum_maminiFA_isRT"] = str(df1["tweet_count"].sum())
 
-    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiFA, False)
+    key_df = obj_query.f_getKey(obj_query.v_maminiFA, False)
     df1 = dict_df[key_df[0]+key_df[1]]
     dict_data["sum_maminiFA_noRT"] = str(df1["tweet_count"].sum())
 
-    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiEN, True)
+    key_df = obj_query.f_getKey(obj_query.v_maminiEN, True)
     df1 = dict_df[key_df[0]+key_df[1]]
     dict_data["sum_maminiEN_isRT"] = str(df1["tweet_count"].sum())
 
-    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiEN, False)
+    key_df = obj_query.f_getKey(obj_query.v_maminiEN, False)
     df1 = dict_df[key_df[0]+key_df[1]]
     dict_data["sum_maminiEN_noRT"] = str(df1["tweet_count"].sum())
 
-    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiAll, True)
+    key_df = obj_query.f_getKey(obj_query.v_maminiAll, True)
     df1 = dict_df[key_df[0]+key_df[1]]
     dict_data["sum_maminiALL_isRT"] = str(df1["tweet_count"].sum())
 
-    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiAll, False)
+    key_df = obj_query.f_getKey(obj_query.v_maminiAll, False)
     df1 = dict_df[key_df[0]+key_df[1]]
     dict_data["sum_maminiALL_noRT"] = str(df1["tweet_count"].sum())
 
@@ -217,7 +217,7 @@ def f_prepAmini():
     f_exportData(dict_data, "./data/data_counts/dataj.json")
 
 
-    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiAll,True)
+    key_df = obj_query.f_getKey(obj_query.v_maminiAll,True)
     df1 = f_getCountsPer1Day(dict_df[key_df[0]+key_df[1]])
     df1["cums"] = df1["tweet_count"].cumsum()
     df1.to_csv("./data/data_counts/df_counts_by_day_with_retweet.csv")
@@ -227,7 +227,7 @@ def f_prepAmini():
     df1 = f_getCountsPer1Hour(df1)
     df1.to_csv("./data/data_counts/df_counts_last24h_with_retweet.csv")
     
-    key_df = obj_query.f_getKey(cls_qMAmini.v_maminiAll,False)
+    key_df = obj_query.f_getKey(obj_query.v_maminiAll,False)
     df2 = f_getCountsPer1Day(dict_df[key_df[0]+key_df[1]])
     df2["cums"] = df2["tweet_count"].cumsum()
     df2.to_csv("./data/data_counts/df_counts_by_day_no_retweet.csv")
@@ -289,9 +289,7 @@ def f_prepTrackHash():
         
         df1 = f_getDataFrameFromRawJSON(path_dir, fileKey)
 
-        #key_df = obj_query.f_getKey(obj_query.m_queries[0][1],True)
-        #df1 = dict_df[key_df[0]+key_df[1]]
-        #df1["cums"] = df1["tweet_count"].cumsum()
+        
         df1 = f_getCountsPer1Day(df1)
         df1.to_csv("./data/data_counts/df_counts_trends_{}.csv".format(fileKey))
         
