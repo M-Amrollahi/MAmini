@@ -283,27 +283,20 @@ def f_prepTrackHash():
         return
     os.rmdir(path_lockFile)
 
-    dict_df = dict()
+    
     for item in obj_query:
         fileKey = item[0][0]+item[1][0]
-        dict_df[fileKey] = f_getDataFrameFromRawJSON(path_dir, fileKey)
+        
+        df1 = f_getDataFrameFromRawJSON(path_dir, fileKey)
+
+        #key_df = obj_query.f_getKey(obj_query.m_queries[0][1],True)
+        #df1 = dict_df[key_df[0]+key_df[1]]
+        #df1["cums"] = df1["tweet_count"].cumsum()
+        df1 = f_getCountsPer1Day(df1)
+        df1.to_csv("./data/data_counts/df_counts_trends_{}.csv".format(fileKey))
+        
+
     
-
-    dict_data = dict()
-
-    key_df = obj_query.f_getKey(cls_qTrackHash.v_sharifUni,True)
-    df1 = dict_df[key_df[0]+key_df[1]]
-    df1["cums"] = df1["tweet_count"].cumsum()
-    df1 = f_getCountsPer1Hour(df1)
-    df1.to_csv("./data/data_counts/df_counts_last24h_{}.csv".format(key_df[0]+key_df[1]))
-    
-
-    key_df = obj_query.f_getKey(cls_qTrackHash.v_etesabat,True)
-    df1 = dict_df[key_df[0]+key_df[1]]
-    df1["cums"] = df1["tweet_count"].cumsum()
-    df1 = f_getCountsPer1Hour(df1)
-    df1.to_csv("./data/data_counts/df_counts_last24h_{}.csv".format(key_df[0]+key_df[1]))
-
     f_exportData(config , "./config_track.json")
 
     for j in obj_query:
