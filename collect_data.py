@@ -34,7 +34,7 @@ def f_getDataFrameFromRawJSON(str_path="./", fileTemplate=""):
     return df_tmp
 
 
-def f_getTwitterData( tup_query, path_saveFiles):
+def f_getTwitterData( tup_query, path_saveFiles, str_startDatetime=None):
 
     configs = f_getConfigs("./config_counts.json")
 
@@ -43,7 +43,10 @@ def f_getTwitterData( tup_query, path_saveFiles):
     dict_reqParams = dict()
 
     str_nextToken = ""
-    str_dtNow = datetime.now().strftime("%Y-%m-%d_%H-%M")
+    #str_dtNow = datetime.now().strftime("%Y-%m-%d_%H-%M")
+    if str_startDatetime != None:
+        configs["start_time"] = str_startDatetime
+
 
     while(True):
             
@@ -170,7 +173,7 @@ def f_prepAmini():
     os.mkdir(path_lockFile)
     try:
         for q in obj_query:
-            f_getTwitterData(q, path_dir )
+            f_getTwitterData(q[0], path_dir )
     except:
         os.rmdir(path_lockFile)
         return
@@ -277,7 +280,7 @@ def f_prepTrackHash():
     os.mkdir(path_lockFile)
     try:
         for q in obj_query:
-            f_getTwitterData(q, path_dir )
+            f_getTwitterData(q[0], path_dir, q[1] )
     except:
         os.rmdir(path_lockFile)
         return

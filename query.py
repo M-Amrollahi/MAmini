@@ -19,7 +19,7 @@ class cls_query:
 
     def f_getKey(self, query, isRT):
         for item in self.m_queries.items():
-            if query == item[1]:
+            if query == item[1][0]:
                 return (item[0], self.f_rtToStr(isRT))
 
 class cls_qTrackHash(cls_query):
@@ -30,9 +30,9 @@ class cls_qTrackHash(cls_query):
         self.m_isRetweet = [True]
 
         self.m_queries = {
-            "masmumiat_daneshamooz": "#مسمومیت_دانش_آموزان",
-            "hamle_chemi_madares": "#حمله_شیمیایی_به_مدارس",
-            "etesabat_sarasari": "#اعتصابات_سراسری",
+            "masmumiat_daneshamooz": ["#مسمومیت_دانش_آموزان", "2023-02-01T00:00:00Z"],
+            "hamle_chemi_madares": ["#حمله_شیمیایی_به_مدارس", "2023-02-01T00:00:00Z"],
+            "etesabat_sarasari": ["#اعتصابات_سراسری", "2022-09-14T00:00:00Z"],
         }
 
 class cls_qMAmini(cls_query):
@@ -45,7 +45,7 @@ class cls_qMAmini(cls_query):
         self.v_maminiAll = "(" + self.v_maminiFA + " OR " + self.v_maminiEN + ")"
         
         self.m_queries = {
-            "mamini_fa": self.v_maminiFA,
-            "mamini_en": self.v_maminiEN,
-            "mamini_all": self.v_maminiAll , 
+            "mamini_fa": [self.v_maminiFA],
+            "mamini_en": [self.v_maminiEN],
+            "mamini_all": [self.v_maminiAll] , 
         }
