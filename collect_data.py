@@ -171,7 +171,7 @@ def f_prepAmini():
     os.mkdir(path_lockFile)
     try:
         for q in obj_query:
-            f_getTwitterData(q[0], path_dir )
+            f_getTwitterData(q[0][1][0], path_dir )
     except:
         os.rmdir(path_lockFile)
         return
@@ -278,7 +278,7 @@ def f_prepTrackHash():
     os.mkdir(path_lockFile)
     try:
         for q in obj_query:
-            f_getTwitterData(q[0], path_dir, q[1] )
+            f_getTwitterData(q[0][1][0], path_dir, q[0][1][1] )
     except:
         os.rmdir(path_lockFile)
         return
