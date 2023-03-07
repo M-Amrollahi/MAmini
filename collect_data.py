@@ -49,7 +49,7 @@ def f_getTwitterData( tup_query, path_saveFiles, str_startDatetime=None):
     while(True):
             
         #Set the params for creating http request
-        str_qtotal = tup_query[0][1]
+        str_qtotal = tup_query[0][1][0]
         if tup_query[1][1] == False:
             str_qtotal += " -is:retweet"
         dict_reqParams = {"query": str_qtotal ,
@@ -171,8 +171,9 @@ def f_prepAmini():
     os.mkdir(path_lockFile)
     try:
         for q in obj_query:
-            f_getTwitterData(q[0][1][0], path_dir )
-    except:
+            f_getTwitterData(q, path_dir )
+    except Exception as er:
+        
         os.rmdir(path_lockFile)
         return
     os.rmdir(path_lockFile)
@@ -278,7 +279,7 @@ def f_prepTrackHash():
     os.mkdir(path_lockFile)
     try:
         for q in obj_query:
-            f_getTwitterData(q[0][1][0], path_dir, q[0][1][1] )
+            f_getTwitterData(q, path_dir, q[0][1][1] )
     except:
         os.rmdir(path_lockFile)
         return
