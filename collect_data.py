@@ -44,8 +44,6 @@ def f_getTwitterData( tup_query, path_saveFiles, str_startDatetime=None):
 
     str_nextToken = ""
     #str_dtNow = datetime.now().strftime("%Y-%m-%d_%H-%M")
-    if str_startDatetime != None:
-        configs["start_time"] = str_startDatetime
 
 
     while(True):
@@ -55,7 +53,7 @@ def f_getTwitterData( tup_query, path_saveFiles, str_startDatetime=None):
         if tup_query[1][1] == False:
             str_qtotal += " -is:retweet"
         dict_reqParams = {"query": str_qtotal ,
-                        "start_time":configs["start_time"],#2017-01-01T00:00:01Z
+                        "start_time":configs["start_time"] if str_startDatetime == None else str_startDatetime,#2017-01-01T00:00:01Z
                         #"end_time":str_endDatetime,
                         }
         #First index does not contain the next_token in params
