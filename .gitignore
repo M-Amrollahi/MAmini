@@ -8,3 +8,4 @@ secrets.toml
 image
 *.csv
 ._README.md
+/data/tw_raw/*.json
