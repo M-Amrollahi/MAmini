@@ -26,7 +26,7 @@ for q in obj_query:
         df1 = pd.read_csv(filename)
         df1 = df1.drop(columns=["Unnamed: 0"])
 
-        st.markdown(center_format.format(f"Number of tweets for <a href='https://twitter.com/search?q={q[0][1][0].replace("#","%23")}'>{q[0][1][0]}</a>"),unsafe_allow_html=True)
+        st.markdown(center_format.format(f"Number of tweets for <a href='https://twitter.com/search?q={q[0][1][0].replace('#','%23')}'>{q[0][1][0]}</a>"),unsafe_allow_html=True)
         fig = px.bar(df1,x="date",y="tweet_count",labels={"date":"Date","tweet_count":"Count"})
         st.plotly_chart(fig)
     except:
